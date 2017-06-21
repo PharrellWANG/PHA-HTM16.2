@@ -1643,7 +1643,7 @@ Void TEncCu::xEncodeCU( TComDataCU* pcCU, UInt uiAbsPartIdx, UInt uiDepth )
 	  // write encode data ////////////////////////////////////////////////////////////////////////////////////
 	  try {
 		  char szFileName[1024];
-		  sprintf(szFileName, "test_%d.csv", uiDepth);
+		  sprintf(szFileName, "/Users/Pharrell_WANG/Documents/MSc-Dis-2016/HTM_v16.2_Balloon_Encoder/data_exported/mixed_data_%d.csv", uiDepth);
 		  csvfile csv(szFileName);
 		  // write CU original pixels
 		  for(y=0; y<uiCuSize; y++)

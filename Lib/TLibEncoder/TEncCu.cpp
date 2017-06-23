@@ -1655,7 +1655,7 @@ Void TEncCu::xEncodeCU( TComDataCU* pcCU, UInt uiAbsPartIdx, UInt uiDepth )
           try {
               char szFileName[1024];
               // separate CU based on sizes . [modified by Pharrell] BEGIN
-              sprintf(szFileName, "/Users/Pharrell_WANG/XcodeProj/for_HTM_debugging/data_exported/mixed_data_%d.csv", uiDepth);
+              sprintf(szFileName, "/Users/Pharrell_WANG/Documents/MSc-Dis-2016/HTM_v16.2_GT_Fly_Encoder/data_exported/mixed_data_%d.csv", uiDepth);
               // separate CU based on sizes . [modified by Pharrell] END
               csvfile csv(szFileName);
               // write CU original pixels
@@ -1674,7 +1674,7 @@ Void TEncCu::xEncodeCU( TComDataCU* pcCU, UInt uiAbsPartIdx, UInt uiDepth )
               } else if (iDir[0] == 37){
                   csv << 35;
                   assert ( typeid(iDir[0]).name() == typeid(37).name() );
-              } else if (iDir[0] == 37){
+              } else if (iDir[0] == 38){
                   csv << 36;
                   assert ( typeid(iDir[0]).name() == typeid(37).name() );
               }

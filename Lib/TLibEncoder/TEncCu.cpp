@@ -1627,12 +1627,22 @@ Void TEncCu::xEncodeCU( TComDataCU* pcCU, UInt uiAbsPartIdx, UInt uiDepth )
 	  const UInt         uiCuSize	= (maxCUWidth >> uiDepth);				// Y CU Size
 	  const Pel        * pOrgPel    = &pOrg[uiTPelY * iStride + uiLPelX];	// Y pel CU pointer
 
+//      std::cout<< "--------------------------------------------------" << std::endl;
+//      std::cout<< "===================================================" << std::endl;
+//      std::cout<< "maxCUWidth: " << maxCUWidth << std::endl;
+//      std::cout<< "uiDepth   : " << uiDepth << std::endl;
+//      std::cout<< "********  uiCuSize  =  maxCUWidth >> uiDepth : " << uiCuSize << std::endl;
+//      std::cout<< "===================================================" << std::endl;
+//      std::cout<< "" << std::endl;
+//      std::cout<< "" << std::endl;
+
+//      if (uiCuSize != 8 and uiCuSize != 16 and uiCuSize != 32 and uiCuSize != 64){
+//      }
+
+
 	  // get CU mode and intra prediction direction
 	  iDISFlag = (Int) pcCU->getDISFlag(uiAbsPartIdx);				
-	  if(iDISFlag)
-		  iDISType = (Int) pcCU->getDISType(uiAbsPartIdx);
-	  else // iDISFlag == 0
-	  {
+	  if (!iDISFlag){
 		  PartSize mode = pcCU->getPartitionSize(uiAbsPartIdx);
 		  iPartNum = (mode == SIZE_NxN) ? 4 : 1;
 		  UInt partOffset = (pcCU->getPic()->getNumPartitionsInCtu() >> (pcCU->getDepth(uiAbsPartIdx) << 1)) >> 2;
@@ -1641,28 +1651,40 @@ Void TEncCu::xEncodeCU( TComDataCU* pcCU, UInt uiAbsPartIdx, UInt uiDepth )
 	  }
 
 	  // write encode data ////////////////////////////////////////////////////////////////////////////////////
-	  try {
-		  char szFileName[1024];
-		  sprintf(szFileName, "/Users/Pharrell_WANG/Documents/MSc-Dis-2016/HTM_v16.2_Balloon_Encoder/data_exported/mixed_data_%d.csv", uiDepth);
-		  csvfile csv(szFileName);
-		  // write CU original pixels
-		  for(y=0; y<uiCuSize; y++)
-		  {
-			  for(x=0; x<uiCuSize; x++)
-				  csv << pOrgPel[x];
-			  pOrgPel += iStride;
-		  }
-		  // write CU mode and intra prediction direction
-		  csv << iDISFlag;
-		  csv << iDISType;
-		  csv << iPartNum;
-		  for(j=0; j<4; j++)
-			  csv << iDir[j];
-		  csv << endrow;
-	  }
-	  catch (const std::exception &ex) {
-		  std::cout << "Exception was thrown: " << ex.what() << std::endl;
-	  }
+      if (iPartNum == 1) {
+          try {
+              char szFileName[1024];
+              // separate CU based on sizes . [modified by Pharrell] BEGIN
+              sprintf(szFileName, "/Users/Pharrell_WANG/XcodeProj/for_HTM_debugging/data_exported/mixed_data_%d.csv", uiDepth);
+              // separate CU based on sizes . [modified by Pharrell] END
+              csvfile csv(szFileName);
+              // write CU original pixels
+              for (y = 0; y < uiCuSize; y++) {
+                  for (x = 0; x < uiCuSize; x++)
+                      csv << pOrgPel[x];
+                  pOrgPel += iStride;
+              }
+              // write CU mode and intra prediction direction
+//              csv << iDISFlag;
+//              csv << iDISType;
+//              csv << iPartNum;
+//              for (j = 0; j < 4; j++)
+              if (iDir[0]<35){
+                  csv << iDir[0];
+              } else if (iDir[0] == 37){
+                  csv << 35;
+                  assert ( typeid(iDir[0]).name() == typeid(37).name() );
+              } else if (iDir[0] == 37){
+                  csv << 36;
+                  assert ( typeid(iDir[0]).name() == typeid(37).name() );
+              }
+
+              csv << endrow;
+          }
+          catch (const std::exception &ex) {
+              std::cout << "Exception was thrown: " << ex.what() << std::endl;
+          }
+      }
   }
 #endif
   //end ho

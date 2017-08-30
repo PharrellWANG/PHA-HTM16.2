@@ -1655,53 +1655,53 @@ Void TEncCu::xEncodeCU( TComDataCU* pcCU, UInt uiAbsPartIdx, UInt uiDepth )
 	  }
 
 	  // write encode data ////////////////////////////////////////////////////////////////////////////////////
-      if (uiDepth == 1) {
-          if (iPartNum == 1) {
-              try {
-                  char szFileName[1024];
-                  // get cwd pharrell begin
-                  //              char buffer[SIZE];
-                  //              char *answer = getcwd(buffer, sizeof(buffer));
-                  //              std::string s_cwd;
-                  //              if (answer) {
-                  //                  s_cwd = answer;
-                  //              }
-                  // get cwd pharrell end
-                  sprintf(szFileName, "/Users/Pharrell_WANG/XcodeProj/for_HTM_debugging/data_exported/mixed_data_%d.csv", uiDepth);
-                  //              sprintf(szFileName, "/Users/zwapimachk/data_collecting/undo_dancer_1920x1088/data_exported/mixed_data_%d.csv", uiDepth);
-                  //              sprintf(szFileName, "/data_exported/mixed_data_%d.csv", uiDepth);
-                  //              std::string fileName = s_cwd + szFileName;
-                  csvfile csv(szFileName);
-                  // write CU original pixels
-                  for (y = 0; y < uiCuSize; y++) {
-                      for (x = 0; x < uiCuSize; x++)
-                          csv << pOrgPel[x];
-                      pOrgPel += iStride;
-                  }
-                  // write CU mode and intra prediction direction
-                  //              csv << iDISFlag;
-                  //              csv << iDISType;
-                  //              csv << iPartNum;
-                  //              for (j = 0; j < 4; j++)
-                  if (iDir[0] < 35) {
-                      csv << iDir[0];
-                  } else if (iDir[0] == 37) {
-                      csv << 35;
-                      assert (typeid(iDir[0]).name() == typeid(37).name());
-                  } else if (iDir[0] == 38) {
-                      csv << 36;
-                      assert (typeid(iDir[0]).name() == typeid(37).name());
-                  } else {
-                      std::cout << "iDir[0]: " << iDir[0] << std::endl;
-                  }
+//      if (uiDepth == 1) {
+      if (iPartNum == 1) {
+          try {
+              char szFileName[1024];
+              // get cwd pharrell begin
+              //              char buffer[SIZE];
+              //              char *answer = getcwd(buffer, sizeof(buffer));
+              //              std::string s_cwd;
+              //              if (answer) {
+              //                  s_cwd = answer;
+              //              }
+              // get cwd pharrell end
+//              sprintf(szFileName, "/Users/Pharrell_WANG/XcodeProj/for_HTM_debugging/data_exported/mixed_data_%d.csv", uiDepth);
+              sprintf(szFileName, "/Users/pharrell_wang/data_collecting/poznan_hall_1920x1088/data_exported/mixed_data_%d.csv", uiDepth);
+              //              sprintf(szFileName, "/dat,a_exported/mixed_data_%d.csv", uiDepth);
+              //              std::string fileName = s_cwd + szFileName;
+              csvfile csv(szFileName);
+              // write CU original pixels
+              for (y = 0; y < uiCuSize; y++) {
+                  for (x = 0; x < uiCuSize; x++)
+                      csv << pOrgPel[x];
+                  pOrgPel += iStride;
+              }
+              // write CU mode and intra prediction direction
+              //              csv << iDISFlag;
+              //              csv << iDISType;
+              //              csv << iPartNum;
+              //              for (j = 0; j < 4; j++)
+              if (iDir[0] < 35) {
+                  csv << iDir[0];
+              } else if (iDir[0] == 37) {
+                  csv << 35;
+                  assert (typeid(iDir[0]).name() == typeid(37).name());
+              } else if (iDir[0] == 38) {
+                  csv << 36;
+                  assert (typeid(iDir[0]).name() == typeid(37).name());
+              } else {
+                  std::cout << "iDir[0]: " << iDir[0] << std::endl;
+              }
 
-                  csv << endrow;
-              }
-              catch (const std::exception &ex) {
-                  std::cout << "Exception was thrown: " << ex.what() << std::endl;
-              }
+              csv << endrow;
+          }
+          catch (const std::exception &ex) {
+              std::cout << "Exception was thrown: " << ex.what() << std::endl;
           }
       }
+//      }
   }
 #endif
   //end ho
